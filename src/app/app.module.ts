@@ -4,10 +4,24 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { MainComponent } from './main/main.component';
+import { SummaryComponent } from './summary/summary.component';
+import { TempInfoComponent } from './temp-info/temp-info.component';
+import { PhwInfoComponent } from './phw-info/phw-info.component';
+import { ChartComponent } from './chart/chart.component';
+import { ForecastDaysComponent } from './forecast-days/forecast-days.component';
+import { DayCardComponent } from './day-card/day-card.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainComponent,
+    SummaryComponent,
+    TempInfoComponent,
+    PhwInfoComponent,
+    ChartComponent,
+    ForecastDaysComponent,
+    DayCardComponent
   ],
   imports: [
     BrowserModule,
