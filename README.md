@@ -1,6 +1,7 @@
 # WeatherAppRxjs
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.2.
+Weather App with RxJS as Service Layer
+This app is to demonstrate the how a RxJS powered service layer could be used to manage the state of an application.
 
 ## Development server
 
