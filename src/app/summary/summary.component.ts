@@ -7,7 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SummaryComponent implements OnInit {
 
-  constructor() { }
+  locationInfo: string;
+  daySelected: string;
+  howIsCurrentWeather: string;
+
+  constructor() { 
+    this.locationInfo = "Laxmi Nagar, Kondapur, Hyderabad, Telangana";
+    this.daySelected = "Friday";
+    this.howIsCurrentWeather = "PartlyCloudy";
+  }
 
   ngOnInit() {
   }
