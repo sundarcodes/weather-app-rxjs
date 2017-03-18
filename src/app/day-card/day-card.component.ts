@@ -7,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DayCardComponent implements OnInit {
 
-  constructor() { }
+  day: string;
+  minTemp: number;
+  maxTemp: number;
+  constructor() {
+    this.day = 'Fri';
+    this.maxTemp = 27;
+    this.minTemp = 22;
+  }
 
   ngOnInit() {
   }
