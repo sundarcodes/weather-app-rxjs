@@ -1,0 +1,7 @@
+chart {
+    display: block;
+    height: auto;
+}
+#chartContainer{
+    height: 200px;
+}

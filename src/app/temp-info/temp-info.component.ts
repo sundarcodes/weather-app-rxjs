@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./temp-info.component.css']
 })
 export class TempInfoComponent implements OnInit {
-
-  constructor() { }
+  
+  currentTemp: number;
+  constructor() { 
+    this.currentTemp = 23;
+  }
 
   ngOnInit() {
   }

@@ -7,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PhwInfoComponent implements OnInit {
 
-  constructor() { }
+  precipitation: number;
+  humidity: number;
+  windSpeed: number;
+  constructor() {
+    this.precipitation = 0;
+    this.humidity = 70;
+    this.windSpeed = 8;
+   }
 
   ngOnInit() {
   }

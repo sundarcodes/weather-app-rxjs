@@ -1,0 +1,16 @@
+#tempInfo {
+    height: 50%;
+}
+
+#currentFeel {
+    float: left;
+    height: 64px;
+    width: 64px;
+}
+
+#temp {
+    font-size: 64px;
+    padding-left: 10px;
+    margin-top: -14px;
+    float: left;
+}

@@ -12,6 +12,8 @@ import { ChartComponent } from './chart/chart.component';
 import { ForecastDaysComponent } from './forecast-days/forecast-days.component';
 import { DayCardComponent } from './day-card/day-card.component';
 
+import { ChartModule } from 'angular2-highcharts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +28,8 @@ import { DayCardComponent } from './day-card/day-card.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ChartModule.forRoot(require('highcharts'))
   ],
   providers: [],
   bootstrap: [AppComponent]
