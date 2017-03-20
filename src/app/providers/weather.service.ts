@@ -33,10 +33,12 @@ export class WeatherService {
     return this.sendRequestForCity(city)
     .do(x => console.log(x))
     .switchMap(forecastList => Observable.of(this.buildDayWiseMap(forecastList)));
+    // .mapTo(this.setDayToSeeWeather(new Date().getDay()));
   }
 
   buildDayWiseMap(forecastList) {
-  return forecastList.reduce((acc, listing) => {
+    this.dayWiseMap = 
+      forecastList.reduce((acc, listing) => {
       const listingDay = new Date(listing.dt * 1000).getDay();
       if (!(listingDay in acc)) {
         acc[listingDay] = {
@@ -47,7 +49,9 @@ export class WeatherService {
           humidity: [],
           windSpeed: [],
           howItFeelsLike: [],
-          howItFeelsLikeDesc: []
+          howItFeelsLikeDesc: [],
+          minTemp: 0,
+          maxTemp: 0
         };
       }
       acc[listingDay].dateTime.push(new Date(listing.dt * 1000));
@@ -58,10 +62,26 @@ export class WeatherService {
       acc[listingDay].windSpeed.push(listing.wind.speed);
       acc[listingDay].howItFeelsLike.push(listing.weather[0].main);
       acc[listingDay].howItFeelsLikeDesc.push(listing.weather[0].description);
+      acc[listingDay].minTemp = acc[listingDay].temp.reduce(this.findMin);
+      acc[listingDay].maxTemp = acc[listingDay].temp.reduce(this.findMax);
       return acc;
     }, {});
+    console.log(this.dayWiseMap);
+    return this.dayWiseMap;
   }
 
+  findMin(a, b) {
+    return a < b ? a : b;
+  }
+
+  findMax(a, b) {
+    return a < b ? b : a;
+  } 
+
+  setDayToSeeWeather(day: number) {
+    console.log(day, this.dayWiseMap);
+    this.weatherTodaySub.next(this.dayWiseMap[day]);
+  }
 
 
 

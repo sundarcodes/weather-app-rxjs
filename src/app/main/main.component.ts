@@ -12,7 +12,12 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this._weatherService.loadWeatherInfoForCity('London')
-    .subscribe( x => console.log(x));
+    .subscribe( x => {
+      this._weatherService.setDayToSeeWeather(new Date().getDay());
+      } );
+
+    this._weatherService.weatherToday$
+    .subscribe(x => console.log(x));
   }
 
 }
