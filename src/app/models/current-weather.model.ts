@@ -8,4 +8,5 @@ export class WeatherToday {
   minTemp: number;
   howIsTheDayLike: string;
   hourlyForecast: number[];
+  timeSlots: number[];
 }

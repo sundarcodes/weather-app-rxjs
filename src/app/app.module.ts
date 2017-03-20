@@ -11,6 +11,7 @@ import { PhwInfoComponent } from './phw-info/phw-info.component';
 import { ChartComponent } from './chart/chart.component';
 import { ForecastDaysComponent } from './forecast-days/forecast-days.component';
 import { DayCardComponent } from './day-card/day-card.component';
+import { WeatherService } from './providers/weather.service';
 
 import { ChartModule } from 'angular2-highcharts';
 
@@ -31,7 +32,7 @@ import { ChartModule } from 'angular2-highcharts';
     HttpModule,
     ChartModule.forRoot(require('highcharts'))
   ],
-  providers: [],
+  providers: [ WeatherService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
