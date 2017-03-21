@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../providers/weather.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -8,7 +9,13 @@ import { WeatherService } from '../providers/weather.service';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private _weatherService: WeatherService) { }
+  currentTemp: BehaviorSubject<number>;
+  currentTemp$: Observable<number>;
+
+  constructor(private _weatherService: WeatherService) {
+    this.currentTemp = new BehaviorSubject(0);
+    this.currentTemp$ = this.currentTemp.asObservable();
+   }
 
   ngOnInit() {
     this._weatherService.loadWeatherInfoForCity('London')
@@ -16,8 +23,10 @@ export class MainComponent implements OnInit {
       this._weatherService.setDayToSeeWeather(new Date().getDay());
       } );
 
-    this._weatherService.weatherToday$
-    .subscribe(x => console.log(x));
+    // this._weatherService.weatherToday$
+    // .subscribe(weatherInfo => {
+    //   this.currentTemp.next(weatherInfo.maxTemp);
+    // });
   }
 
 }

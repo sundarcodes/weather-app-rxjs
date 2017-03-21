@@ -13,12 +13,24 @@ export class WeatherService {
   private weatherToday: WeatherToday;
   public weatherToday$: Observable<WeatherToday>;
   private dayWiseMap: any;
+  private daySelectedSub: BehaviorSubject<string>;
+  public daySelected$: Observable<string>;
+  public location$: Observable<string>;
+  private locationSub: BehaviorSubject<string>;
+  private howItFeelsLikeSub: BehaviorSubject<string>;  
+  public howItFeelsLike$: Observable<string>;
 
   constructor(private _http: Http) {
     this.baseUrl = 'http://api.openweathermap.org/data/2.5/forecast?appid=27d43832d2a4adcb97fcbfa23db130aa&q=London,us';
     this.weatherToday = new WeatherToday();
     this.weatherTodaySub = new BehaviorSubject(this.weatherToday);
     this.weatherToday$ = this.weatherTodaySub.asObservable();
+    this.daySelectedSub = new BehaviorSubject(new Date().getDay() + '');
+    this.daySelected$ = this.daySelectedSub.asObservable();
+    this.locationSub = new BehaviorSubject('Chennai');
+    this.location$ = this.locationSub.asObservable();
+    this.howItFeelsLikeSub = new BehaviorSubject('Its cool');
+    this.howItFeelsLike$ = this.howItFeelsLikeSub.asObservable();
   }
 
   sendRequestForCity(city: string): Observable<any> {
@@ -81,6 +93,7 @@ export class WeatherService {
   setDayToSeeWeather(day: number) {
     console.log(day, this.dayWiseMap);
     this.weatherTodaySub.next(this.dayWiseMap[day]);
+    this.howItFeelsLikeSub.next(this.dayWiseMap[day].howItFeelsLike[0]);
   }
 
 

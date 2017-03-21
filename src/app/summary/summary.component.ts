@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable'
 
 @Component({
   selector: 'app-summary',
@@ -9,12 +10,12 @@ export class SummaryComponent implements OnInit {
 
   locationInfo: string;
   daySelected: string;
-  howIsCurrentWeather: string;
+  @Input() howItFeelsLike: Observable<string>;
 
   constructor() { 
     this.locationInfo = "Laxmi Nagar, Kondapur, Hyderabad, Telangana";
     this.daySelected = "Friday";
-    this.howIsCurrentWeather = "Partly Cloudy";
+    // this.howIsCurrentWeather = "Partly Cloudy";
   }
 
   ngOnInit() {
