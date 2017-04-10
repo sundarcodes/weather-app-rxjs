@@ -1,6 +1,16 @@
+<div class="row  search-box">
+  <div class="col-sm-8">
+    <input type="text" class="form-control" placeholder="Enter the city name">
+  </div>
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-primary">Get Weather Info</button>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-sm-12">
-    <app-summary [howItFeelsLike]="_weatherService.howItFeelsLike$"></app-summary>
+    <app-summary [howItFeelsLike]="_weatherService.howItFeelsLike$ | async" 
+                 [daySelected]="_weatherService.daySelected$ | async"></app-summary>
   </div>
   <div class="col-sm-6">
     <app-temp-info></app-temp-info>

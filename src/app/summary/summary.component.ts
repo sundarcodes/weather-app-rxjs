@@ -9,13 +9,11 @@ import { Observable } from 'rxjs/Observable'
 export class SummaryComponent implements OnInit {
 
   locationInfo: string;
-  daySelected: string;
-  @Input() howItFeelsLike: Observable<string>;
+  @Input() daySelected: string;
+  @Input() howItFeelsLike: string;
 
   constructor() { 
     this.locationInfo = "Laxmi Nagar, Kondapur, Hyderabad, Telangana";
-    this.daySelected = "Friday";
-    // this.howIsCurrentWeather = "Partly Cloudy";
   }
 
   ngOnInit() {
