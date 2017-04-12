@@ -8,12 +8,13 @@ import { Observable } from 'rxjs/Observable'
 })
 export class SummaryComponent implements OnInit {
 
-  locationInfo: string;
+  @Input() locationInfo: string;
   @Input() daySelected: string;
   @Input() howItFeelsLike: string;
 
+
   constructor() { 
-    this.locationInfo = "Laxmi Nagar, Kondapur, Hyderabad, Telangana";
+    // this.locationInfo = "Laxmi Nagar, Kondapur, Hyderabad, Telangana";
   }
 
   ngOnInit() {

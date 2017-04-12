@@ -24,7 +24,7 @@ export class WeatherService {
   private forecastListSub: BehaviorSubject<any>;
 
   constructor(private _http: Http) {
-    this.baseUrl = 'http://api.openweathermap.org/data/2.5/forecast?appid=27d43832d2a4adcb97fcbfa23db130aa&q=London,us';
+    this.baseUrl = 'http://api.openweathermap.org/data/2.5/forecast?appid=27d43832d2a4adcb97fcbfa23db130aa&q=';
     this.weatherToday = new WeatherToday();
     this.weatherTodaySub = new BehaviorSubject(this.weatherToday);
     this.weatherToday$ = this.weatherTodaySub.asObservable();

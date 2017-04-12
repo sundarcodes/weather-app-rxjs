@@ -9,24 +9,19 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class MainComponent implements OnInit {
 
-  currentTemp: BehaviorSubject<number>;
-  currentTemp$: Observable<number>;
+  cityName: string;
 
   constructor(private _weatherService: WeatherService) {
-    this.currentTemp = new BehaviorSubject(0);
-    this.currentTemp$ = this.currentTemp.asObservable();
    }
 
   ngOnInit() {
-    this._weatherService.loadWeatherInfoForCity('London')
+  }
+
+  getWeather() {
+    this._weatherService.loadWeatherInfoForCity(this.cityName)
     .subscribe( x => {
       this._weatherService.setDayToSeeWeather(new Date().getDay());
       } );
-
-    // this._weatherService.weatherToday$
-    // .subscribe(weatherInfo => {
-    //   this.currentTemp.next(weatherInfo.maxTemp);
-    // });
   }
 
 }
