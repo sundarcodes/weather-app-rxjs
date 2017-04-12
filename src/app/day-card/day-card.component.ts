@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-day-card',
@@ -7,13 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DayCardComponent implements OnInit {
 
+  @Input() dayInfo: any;
   day: string;
-  minTemp: number;
-  maxTemp: number;
+  // minTemp: number;
+  // maxTemp: number;
   constructor() {
     this.day = 'Fri';
-    this.maxTemp = 27;
-    this.minTemp = 22;
+    // this.maxTemp = 27;
+    // this.minTemp = 22;
   }
 
   ngOnInit() {

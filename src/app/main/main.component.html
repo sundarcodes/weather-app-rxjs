@@ -22,7 +22,7 @@
     <app-chart></app-chart>
   </div>
  <div class="col-sm-12">
-    <app-forecast-days></app-forecast-days>
+    <app-forecast-days [daysList]="_weatherService.forecastList$ | async"></app-forecast-days>
   </div>
 </div>
 

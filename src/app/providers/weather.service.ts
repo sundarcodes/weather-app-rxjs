@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { Observable, BehaviorSubject } from 'rxjs';
+declare var _:any;
 
 import { WeatherToday } from '../models/current-weather.model';
 
@@ -19,31 +20,35 @@ export class WeatherService {
   private locationSub: BehaviorSubject<string>;
   private howItFeelsLikeSub: BehaviorSubject<string>;  
   public howItFeelsLike$: Observable<string>;
+  public forecastList$: Observable<any>;
+  private forecastListSub: BehaviorSubject<any>;
 
   constructor(private _http: Http) {
     this.baseUrl = 'http://api.openweathermap.org/data/2.5/forecast?appid=27d43832d2a4adcb97fcbfa23db130aa&q=London,us';
     this.weatherToday = new WeatherToday();
     this.weatherTodaySub = new BehaviorSubject(this.weatherToday);
     this.weatherToday$ = this.weatherTodaySub.asObservable();
-    this.daySelectedSub = new BehaviorSubject(new Date().getDay() + '');
+    this.daySelectedSub = new BehaviorSubject('');
     this.daySelected$ = this.daySelectedSub.asObservable();
-    this.locationSub = new BehaviorSubject('Chennai');
+    this.locationSub = new BehaviorSubject('');
     this.location$ = this.locationSub.asObservable();
-    this.howItFeelsLikeSub = new BehaviorSubject('Its cool');
+    this.howItFeelsLikeSub = new BehaviorSubject('');
     this.howItFeelsLike$ = this.howItFeelsLikeSub.asObservable();
+    this.forecastListSub = new BehaviorSubject([]);
+    this.forecastList$ = this.forecastListSub.asObservable();
   }
 
   sendRequestForCity(city: string): Observable<any> {
     const completeURL: string = this.baseUrl + city;
     return this._http.get(completeURL)
-    .do(x => console.log(x))
+    // .do(x => console.log(x))
     .map((data: any) => data.json().list)
-    .do(x => console.log(x))
+    // .do(x => console.log(x))
   }
 
   public loadWeatherInfoForCity(city: string): Observable<any> {
     return this.sendRequestForCity(city)
-    .do(x => console.log(x))
+    // .do(x => console.log(x))
     .switchMap(forecastList => Observable.of(this.buildDayWiseMap(forecastList)));
     // .mapTo(this.setDayToSeeWeather(new Date().getDay()));
   }
@@ -74,11 +79,12 @@ export class WeatherService {
       acc[listingDay].windSpeed.push(listing.wind.speed);
       acc[listingDay].howItFeelsLike.push(listing.weather[0].main);
       acc[listingDay].howItFeelsLikeDesc.push(listing.weather[0].description);
-      acc[listingDay].minTemp = acc[listingDay].temp.reduce(this.findMin);
-      acc[listingDay].maxTemp = acc[listingDay].temp.reduce(this.findMax);
+      acc[listingDay].minTemp = this.convertFromKelvinToCelcius(acc[listingDay].temp.reduce(this.findMin));
+      acc[listingDay].maxTemp = this.convertFromKelvinToCelcius(acc[listingDay].temp.reduce(this.findMax));
       return acc;
     }, {});
-    console.log(this.dayWiseMap);
+    console.log(this.dayWiseMap, _.values(this.dayWiseMap));
+    this.forecastListSub.next(_.values(this.dayWiseMap));
     return this.dayWiseMap;
   }
 
@@ -90,8 +96,12 @@ export class WeatherService {
     return a < b ? b : a;
   } 
 
+  convertFromKelvinToCelcius(temp: number) {
+    return _.round(temp - 273.15, 2);
+  }
+
   setDayToSeeWeather(day: number) {
-    console.log(day, this.dayWiseMap);
+    // console.log(day, this.dayWiseMap);
     this.weatherTodaySub.next(this.dayWiseMap[day]);
     this.daySelectedSub.next(this.getDayOfWeekFor(day));
     this.howItFeelsLikeSub.next(this.dayWiseMap[day].howItFeelsLike[0]);
