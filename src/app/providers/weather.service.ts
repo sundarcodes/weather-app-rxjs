@@ -83,8 +83,15 @@ export class WeatherService {
       acc[listingDay].maxTemp = this.convertFromKelvinToCelcius(acc[listingDay].temp.reduce(this.findMax));
       return acc;
     }, {});
-    console.log(this.dayWiseMap, _.values(this.dayWiseMap));
-    this.forecastListSub.next(_.values(this.dayWiseMap));
+    // console.log(this.dayWiseMap, _.values(this.dayWiseMap));
+    let sortedMap = _.sortBy(this.dayWiseMap, (value) => {
+      let dayOfWeek = new Date(value.dateTime[0]).getDay();
+      let today = new Date().getDay();
+      const diff = dayOfWeek - today;
+      return diff < 0 ? diff + 7 : diff;
+    });
+    // console.log(sortedMap);
+    this.forecastListSub.next(_.take(_.values(sortedMap), 5));
     return this.dayWiseMap;
   }
 
