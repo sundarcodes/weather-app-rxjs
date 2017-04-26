@@ -14,7 +14,7 @@
                  [daySelected]="_weatherService.daySelected$ | async"></app-summary>
   </div>
   <div class="col-sm-6">
-    <app-temp-info></app-temp-info>
+    <app-temp-info [currentTemp] = "_weatherService.currentTemp$ | async" ></app-temp-info>
   </div>
   <div class="col-sm-6">
     <app-phw-info></app-phw-info>

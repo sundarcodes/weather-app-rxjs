@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-temp-info',
@@ -7,9 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TempInfoComponent implements OnInit {
   
-  currentTemp: number;
+  @Input() currentTemp: number;
   constructor() { 
-    this.currentTemp = 23;
   }
 
   ngOnInit() {

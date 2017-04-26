@@ -22,6 +22,8 @@ export class WeatherService {
   public howItFeelsLike$: Observable<string>;
   public forecastList$: Observable<any>;
   private forecastListSub: BehaviorSubject<any>;
+  public currentTemp$: Observable<any>;
+  private currentTempSub: BehaviorSubject<any>;
 
   constructor(private _http: Http) {
     this.baseUrl = 'http://api.openweathermap.org/data/2.5/forecast?appid=27d43832d2a4adcb97fcbfa23db130aa&q=';
@@ -36,6 +38,8 @@ export class WeatherService {
     this.howItFeelsLike$ = this.howItFeelsLikeSub.asObservable();
     this.forecastListSub = new BehaviorSubject([]);
     this.forecastList$ = this.forecastListSub.asObservable();
+    this.currentTempSub = new BehaviorSubject([]);
+    this.currentTemp$ = this.currentTempSub.asObservable();    
   }
 
   sendRequestForCity(city: string): Observable<any> {
@@ -108,10 +112,11 @@ export class WeatherService {
   }
 
   setDayToSeeWeather(day: number) {
-    // console.log(day, this.dayWiseMap);
+    console.log(day, this.dayWiseMap);
     this.weatherTodaySub.next(this.dayWiseMap[day]);
     this.daySelectedSub.next(this.getDayOfWeekFor(day));
     this.howItFeelsLikeSub.next(this.dayWiseMap[day].howItFeelsLike[0]);
+    this.currentTempSub.next(this.convertFromKelvinToCelcius(this.dayWiseMap[day].temp[0]));
   }
 
   getDayOfWeekFor(day: number) {
