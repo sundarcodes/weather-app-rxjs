@@ -24,4 +24,8 @@ export class MainComponent implements OnInit {
       } );
   }
 
+  onDaySelected(dayNum) {
+    this._weatherService.setDayToSeeWeather(dayNum);
+  }
+
 }

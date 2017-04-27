@@ -24,6 +24,8 @@ export class WeatherService {
   private forecastListSub: BehaviorSubject<any>;
   public currentTemp$: Observable<any>;
   private currentTempSub: BehaviorSubject<any>;
+  public chartData$: Observable<any>;
+  private chartDataSub: BehaviorSubject<any>;  
 
   constructor(private _http: Http) {
     this.baseUrl = 'http://api.openweathermap.org/data/2.5/forecast?appid=27d43832d2a4adcb97fcbfa23db130aa&q=';
@@ -39,7 +41,9 @@ export class WeatherService {
     this.forecastListSub = new BehaviorSubject([]);
     this.forecastList$ = this.forecastListSub.asObservable();
     this.currentTempSub = new BehaviorSubject([]);
-    this.currentTemp$ = this.currentTempSub.asObservable();    
+    this.currentTemp$ = this.currentTempSub.asObservable();
+    this.chartDataSub = new BehaviorSubject({});
+    this.chartData$ = this.chartDataSub.asObservable();       
   }
 
   sendRequestForCity(city: string): Observable<any> {
@@ -75,16 +79,16 @@ export class WeatherService {
           maxTemp: 0
         };
       }
-      acc[listingDay].dateTime.push(new Date(listing.dt * 1000));
+      acc[listingDay].dateTime.push(listing.dt * 1000);
       acc[listingDay].tempMin.push(listing.main.temp_min);
       acc[listingDay].tempMax.push(listing.main.temp_max);
-      acc[listingDay].temp.push(listing.main.temp);
+      acc[listingDay].temp.push(this.convertFromKelvinToCelcius(listing.main.temp));
       acc[listingDay].humidity.push(listing.main.humidity);
       acc[listingDay].windSpeed.push(listing.wind.speed);
       acc[listingDay].howItFeelsLike.push(listing.weather[0].main);
       acc[listingDay].howItFeelsLikeDesc.push(listing.weather[0].description);
-      acc[listingDay].minTemp = this.convertFromKelvinToCelcius(acc[listingDay].temp.reduce(this.findMin));
-      acc[listingDay].maxTemp = this.convertFromKelvinToCelcius(acc[listingDay].temp.reduce(this.findMax));
+      acc[listingDay].minTemp = acc[listingDay].temp.reduce(this.findMin);
+      acc[listingDay].maxTemp = acc[listingDay].temp.reduce(this.findMax);
       return acc;
     }, {});
     // console.log(this.dayWiseMap, _.values(this.dayWiseMap));
@@ -112,11 +116,15 @@ export class WeatherService {
   }
 
   setDayToSeeWeather(day: number) {
-    console.log(day, this.dayWiseMap);
+    // console.log(day, this.dayWiseMap);
     this.weatherTodaySub.next(this.dayWiseMap[day]);
     this.daySelectedSub.next(this.getDayOfWeekFor(day));
     this.howItFeelsLikeSub.next(this.dayWiseMap[day].howItFeelsLike[0]);
-    this.currentTempSub.next(this.convertFromKelvinToCelcius(this.dayWiseMap[day].temp[0]));
+    this.currentTempSub.next(this.dayWiseMap[day].temp[0]);
+    this.chartDataSub.next({
+      temp: this.dayWiseMap[day].temp,
+      time: this.dayWiseMap[day].dateTime
+    });
   }
 
   getDayOfWeekFor(day: number) {

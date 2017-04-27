@@ -20,10 +20,11 @@
     <app-phw-info></app-phw-info>
   </div>
   <div class="col-sm-12" style="height:30vh">
-    <app-chart></app-chart>
+    <app-chart [chartData] = "_weatherService.chartData$ | async"></app-chart>
   </div>
  <div class="col-sm-12">
-    <app-forecast-days [daysList]="_weatherService.forecastList$ | async"></app-forecast-days>
+    <app-forecast-days [daysList]="_weatherService.forecastList$ | async"
+     (daySelected) = "onDaySelected($event)"></app-forecast-days>
   </div>
 </div>
 

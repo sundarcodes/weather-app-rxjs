@@ -1,7 +1,9 @@
 <div class="day-container text-center">
+  <a (click) = "onClick()">
   <p>{{dayInfo.dateTime[0] | date:"EEE"}}</p>
   <img alt="Clear with periodic clouds" src="//ssl.gstatic.com/onebox/weather/48/sunny_s_cloudy.png" >
   <div>
     <span>{{dayInfo.maxTemp}}&deg;</span>&nbsp;<span>{{dayInfo.minTemp}}&deg;</span>
   </div>
+  </a>
 </div>

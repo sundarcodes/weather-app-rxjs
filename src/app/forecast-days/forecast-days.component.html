@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="col-sm-2" *ngFor="let eachDay of daysList">
-      <app-day-card [dayInfo]="eachDay"></app-day-card>
+      <app-day-card [dayInfo]="eachDay" (daySelected) = "onDaySelected($event)"></app-day-card>
     </div>
   </div>
  </div>

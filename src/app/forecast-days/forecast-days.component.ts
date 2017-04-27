@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-forecast-days',
@@ -8,11 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ForecastDaysComponent implements OnInit {
 
   @Input() daysList: any;
+  @Output() daySelected: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.daysList);
+  }
+
+  onDaySelected(dayNum) {
+    this.daySelected.emit(dayNum);
   }
 
 }

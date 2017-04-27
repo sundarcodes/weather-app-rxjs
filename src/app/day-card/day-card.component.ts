@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-day-card',
@@ -8,16 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DayCardComponent implements OnInit {
 
   @Input() dayInfo: any;
-  day: string;
-  // minTemp: number;
-  // maxTemp: number;
+  @Output() daySelected: EventEmitter<number> = new EventEmitter(); 
   constructor() {
-    this.day = 'Fri';
-    // this.maxTemp = 27;
-    // this.minTemp = 22;
   }
 
   ngOnInit() {
+  }
+
+  onClick() {
+    this.daySelected.emit(new Date(this.dayInfo.dateTime[0]).getDay());
   }
 
 }
